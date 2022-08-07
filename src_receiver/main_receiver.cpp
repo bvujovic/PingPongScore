@@ -16,7 +16,7 @@ void setup()
 
 void loop()
 {
-  uint8_t buf[10];
+  uint8_t buf[100];
   uint8_t buflen;
 
   ms = millis();
