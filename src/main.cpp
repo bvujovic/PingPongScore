@@ -117,15 +117,20 @@ void loop()
   }
   lastPul = pul;
 
-  if (msDisplayScore > 0 && millis() > msDisplayScore + 1000)
+  if (msDisplayScore > 0 && millis() > msDisplayScore + 1000 && !score.isMatchOver())
   {
-    // prikaz ko servira - bolje bi izgledalo malo "o" od 0
+    // prikaz ko servira
     if (score.getServe() == Home)
-      display.showNumberDec(0, false, 4, 1);
+    {
+      const uint8_t HOME_BALL[] = {SEG_C | SEG_D | SEG_E | SEG_G, SEG_DP, 0, 0}; // |o :  |
+      display.setSegments(HOME_BALL);
+    }
     else
-      display.showNumberDec(0, false, 4, 0);
+    {
+      const uint8_t AWAY_BALL[] = {0, SEG_DP, 0, SEG_C | SEG_D | SEG_E | SEG_G}; // |  : o|
+      display.setSegments(AWAY_BALL);
+    }
     delay(1000);
-
     msDisplayScore = 0;
     display.clear();
   }
@@ -147,8 +152,36 @@ void scoreToSerial()
 
 void scoreToDisplay()
 {
-  int digits = score.getHomePoints() * 100 + score.getAwayPoints();
-  display.showNumberDecEx(digits, 0b01000000, true);
+  // B
+  //  int digits = score.getHomePoints() * 100 + score.getAwayPoints();
+  //  display.showNumberDecEx(digits, 0b01000000, true);
+
+  uint8_t segmets[4];
+  //todo napraviti od ovoga funkciju koja prima broj poena koji prikazuje i stranu Home/Away
+  int home = score.getHomePoints();
+  if (home < 10)
+  {
+    segmets[0] = display.encodeDigit(home);
+    segmets[1] = SEG_DP;
+  }
+  else
+  {
+    segmets[0] = display.encodeDigit(home / 10);
+    segmets[1] = display.encodeDigit(home % 10) | SEG_DP;
+  }
+  int away = score.getAwayPoints();
+  if (away < 10)
+  {
+    segmets[2] = 0;
+    segmets[3] = display.encodeDigit(away);
+  }
+  else
+  {
+    segmets[2] = display.encodeDigit(away / 10);
+    segmets[3] = display.encodeDigit(away % 10);
+  }
+  display.setSegments(segmets);
+
   msDisplayScore = millis();
 }
 

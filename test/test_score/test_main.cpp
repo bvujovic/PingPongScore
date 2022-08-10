@@ -55,18 +55,29 @@ void test_change_serve()
     TEST_ASSERT_EQUAL(Home, score.getServe());
 }
 
+void test_change_serve2()
+{
+    Score score;
+    TEST_ASSERT_EQUAL(Home, score.getServe());
+    score.changeServe();
+    TEST_ASSERT_EQUAL(Away, score.getServe());
+    score.pointWon(Home);
+    TEST_ASSERT_EQUAL(Away, score.getServe());
+}
+
 void test_score_basics_away_serve()
 {
     Score score;
     score.changeServe();
+    helper_test_score(score, 0, 0, Away);
     score.pointWon(Home);
-    helper_test_score(score, 1, 0, Home);
+    helper_test_score(score, 1, 0, Away);
     score.pointWon(Home);
     score.pointWon(Home);
-    helper_test_score(score, 3, 0, Away);
+    helper_test_score(score, 3, 0, Home);
     score.pointWon(Away);
     score.pointWon(Away);
-    helper_test_score(score, 3, 2, Home);
+    helper_test_score(score, 3, 2, Away);
 }
 
 void helper_multi_points(Score &score, Side side, int points)
@@ -152,6 +163,7 @@ int main(int argc, char **argv)
     RUN_TEST(test_init);
     RUN_TEST(test_score_basics);
     RUN_TEST(test_change_serve);
+    RUN_TEST(test_change_serve2);
     RUN_TEST(test_score_basics_away_serve);
     RUN_TEST(test_score_advanced);
     RUN_TEST(test_match_over1);

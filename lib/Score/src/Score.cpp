@@ -36,11 +36,6 @@ void Score::pointWon(Side side)
         isOver = true;
 
     calcWhoServesNext();
-    // who serves next
-    // if (homePoints >= 10 && awayPoints >= 10)
-    //     serveCurrent = (Side)(((homePoints + awayPoints)) % 2);
-    // else
-    //     serveCurrent = (Side)(((homePoints + awayPoints) / 2) % 2);
 }
 
 void Score::calcWhoServesNext()
@@ -49,6 +44,8 @@ void Score::calcWhoServesNext()
         serveCurrent = (Side)(((homePoints + awayPoints)) % 2);
     else
         serveCurrent = (Side)(((homePoints + awayPoints) / 2) % 2);
+    if (serveStarted == Away)
+        serveCurrent = (Side)!serveCurrent;
 }
 
 void Score::undoLastPoint()
