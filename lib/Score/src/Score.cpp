@@ -27,15 +27,19 @@ void Score::pointWon(Side side)
         homePoints++;
     if (side == Away)
         awayPoints++;
-    lastPointWon = side;
+    // B lastPointWon = side;
 
-    // is match over
+    calcIsMatchOver();
+    calcWhoServesNext();
+}
+
+void Score::calcIsMatchOver()
+{
+    isOver = false;
     if ((homePoints >= 11 && awayPoints <= 9) || (awayPoints >= 11 && homePoints <= 9))
         isOver = true;
     else if (homePoints >= 10 && awayPoints >= 10 && (homePoints >= awayPoints + 2 || awayPoints >= homePoints + 2))
         isOver = true;
-
-    calcWhoServesNext();
 }
 
 void Score::calcWhoServesNext()
@@ -48,13 +52,24 @@ void Score::calcWhoServesNext()
         serveCurrent = (Side)!serveCurrent;
 }
 
-void Score::undoLastPoint()
+void Score::pointRetracted(Side side)
 {
-    if ((lastPointWon == Home && homePoints == 0) || (lastPointWon == Away && awayPoints == 0))
-        return;
-    if (lastPointWon == Home)
+    if (side == Home && homePoints > 0)
         homePoints--;
-    if (lastPointWon == Away)
+    if (side == Away && awayPoints > 0)
         awayPoints--;
+
+    calcIsMatchOver();
     calcWhoServesNext();
 }
+
+// void Score::undoLastPoint()
+// {
+//     if ((lastPointWon == Home && homePoints == 0) || (lastPointWon == Away && awayPoints == 0))
+//         return;
+//     if (lastPointWon == Home)
+//         homePoints--;
+//     if (lastPointWon == Away)
+//         awayPoints--;
+//     calcWhoServesNext();
+// }

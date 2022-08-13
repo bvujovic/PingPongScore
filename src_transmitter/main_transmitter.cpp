@@ -1,4 +1,4 @@
-//* This code is executing on Attiny85 w/ stx882 (transmitter).
+//* This code is executing on Attiny85 @8MHz w/ STX882 (transmitter).
 //* Based on https://github.com/perja12/nexa_remote_control
 
 #include <Arduino.h>
@@ -8,9 +8,9 @@
 #define TX_PIN 0
 
 #define CMD_NONE 0
-#define CMD_1 1
-#define CMD_2 2
-#define CMD_3 3
+#define CMD_HOME 1
+#define CMD_MIDDLE 2
+#define CMD_AWAY 3
 
 // Pinout
 // RESET PB5 (5/A0) *o**** VCC
@@ -24,11 +24,11 @@ ISR(PCINT0_vect)
 {
   cli();
   if (!bit_is_set(PINB, PB1))
-    cmd = CMD_1;
+    cmd = CMD_HOME;
   if (!bit_is_set(PINB, PB2))
-    cmd = CMD_2;
+    cmd = CMD_MIDDLE;
   if (!bit_is_set(PINB, PB3))
-    cmd = CMD_3;
+    cmd = CMD_AWAY;
 }
 
 void setup()
@@ -71,56 +71,18 @@ void loop()
   {
     // Wakes up here.
     pinMode(TX_PIN, OUTPUT);
-
+    //BV: 5x send LOW for 4000/5000/6000 msec 
     for (int i = 0; i < 5; i++)
     {
       send(HIGH, 1);
       send(LOW, 3 + cmd);
     }
     send(HIGH, 1);
-
-    // for (int i = 0; i < 4 + cmd * 2; i++)
-    // {
-    //   send(HIGH, 1);
-    //   send(LOW, 5);
-    // }
-    // send(HIGH, 1);
   }
   // Avoid getting a new interrupt because of button bounce.
   delay(50);
-
-  // if (cmd = CMD_1)
-  // {
-  //   // unsigned long ms = millis();
-  //   // pinMode(PB1, INPUT);
-  //   pinMode(PB1, INPUT_PULLUP);
-  //   while (!digitalRead(PB1))
-  //   {
-  //     delay(10);
-  //   }
-  //   for (int i = 0; i < 4; i++)
-  //   {
-  //     send(HIGH, 1);
-  //     send(LOW, 5);
-  //   }
-  // }
-  // send(HIGH, 1);
   sei(); // enable interupts
 
-  // unsigned long ms = millis();
-  // while (!bit_is_set(PINB, PB3))
-  //   delay(50);
-  // if (millis() > ms + 500)
-  // {
-  //   cli(); // disable interupts
-  //   for (int i = 0; i < 4; i++)
-  //   {
-  //     send(HIGH, 1);
-  //     send(LOW, 5);
-  //   }
-  //   send(HIGH, 1);
-  //   sei(); // enable interupts
-  // }
   cmd = CMD_NONE;
 }
 

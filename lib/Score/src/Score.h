@@ -12,10 +12,10 @@ class Score
 private:
     int homePoints;           // how many points has the person with controls (this device)
     int awayPoints;           // how many points has the other person
-    Side lastPointWon;        // who won last point
     Side serveCurrent;        // who is serving next
     Side serveStarted = Away; // who served first
     bool isOver;              // is match over
+    // B Side lastPointWon;        // who won last point
 
 public:
     Score();
@@ -23,7 +23,8 @@ public:
     void changeServe();
 
     void pointWon(Side side);
-    void undoLastPoint();
+    // B void undoLastPoint();
+    void pointRetracted(Side side);
 
     int getHomePoints() { return homePoints; }
     int getAwayPoints() { return awayPoints; }
@@ -32,5 +33,5 @@ public:
 
 private:
     void calcWhoServesNext();
-
+    void calcIsMatchOver();
 };
