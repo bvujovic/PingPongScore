@@ -143,18 +143,37 @@ void test_match_over2()
     TEST_ASSERT_TRUE(score.isMatchOver());
 }
 
-void test_undoLastPoint()
+// B
+// void test_undoLastPoint()
+// {
+//     Score score;
+//     score.undoLastPoint();
+//     helper_test_score(score, 0, 0, Home);
+//     score.pointWon(Away);
+//     helper_test_score(score, 0, 1, Home);
+//     score.undoLastPoint();
+//     helper_test_score(score, 0, 0, Home);
+//     score.pointWon(Away);
+//     score.pointWon(Away);
+//     helper_test_score(score, 0, 2, Away);
+// }
+
+void test_pointRetracted()
 {
     Score score;
-    score.undoLastPoint();
+    score.pointRetracted(Home);
     helper_test_score(score, 0, 0, Home);
     score.pointWon(Away);
     helper_test_score(score, 0, 1, Home);
-    score.undoLastPoint();
+    score.pointRetracted(Away);
     helper_test_score(score, 0, 0, Home);
     score.pointWon(Away);
     score.pointWon(Away);
     helper_test_score(score, 0, 2, Away);
+    score.pointRetracted(Away);
+    helper_test_score(score, 0, 1, Home);
+    score.pointRetracted(Home);
+    helper_test_score(score, 0, 1, Home);
 }
 
 int main(int argc, char **argv)
@@ -168,6 +187,6 @@ int main(int argc, char **argv)
     RUN_TEST(test_score_advanced);
     RUN_TEST(test_match_over1);
     RUN_TEST(test_match_over2);
-    RUN_TEST(test_undoLastPoint);
+    RUN_TEST(test_pointRetracted);
     UNITY_END();
 }
