@@ -2,7 +2,6 @@
 
 const int SignalDecoder::itvMaxForDoubleClick = 1000;
 
-// counting sequences of pulses: 4ms, 5ms and 6ms for home, middle and away buttons/commands
 void SignalDecoder::pulseCount(ulong pulse, ulong ms)
 {
     if (pulse > 3950 && pulse < 4000)

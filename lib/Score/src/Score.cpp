@@ -12,12 +12,6 @@ void Score::reset()
     serveStarted = serveCurrent = (Side)!serveStarted;
 }
 
-void Score::changeServe()
-{
-    serveStarted = (Side)!serveStarted;
-    serveCurrent = (Side)!serveCurrent;
-}
-
 void Score::pointWon(Side side)
 {
     if (isOver)
@@ -29,11 +23,11 @@ void Score::pointWon(Side side)
         awayPoints++;
     // B lastPointWon = side;
 
-    calcIsMatchOver();
+    calcIsGameOver();
     calcWhoServesNext();
 }
 
-void Score::calcIsMatchOver()
+void Score::calcIsGameOver()
 {
     isOver = false;
     if ((homePoints >= 11 && awayPoints <= 9) || (awayPoints >= 11 && homePoints <= 9))
@@ -59,17 +53,6 @@ void Score::pointRetracted(Side side)
     if (side == Away && awayPoints > 0)
         awayPoints--;
 
-    calcIsMatchOver();
+    calcIsGameOver();
     calcWhoServesNext();
 }
-
-// void Score::undoLastPoint()
-// {
-//     if ((lastPointWon == Home && homePoints == 0) || (lastPointWon == Away && awayPoints == 0))
-//         return;
-//     if (lastPointWon == Home)
-//         homePoints--;
-//     if (lastPointWon == Away)
-//         awayPoints--;
-//     calcWhoServesNext();
-// }
