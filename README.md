@@ -6,11 +6,13 @@ A Game is played to 11 points; must be won by two points.
 
 
 ## Transmitter
-![Transmitter](https://github.com/bvujovic/PingPongScore/blob/main/docs/prototype_transmitter.jpg)
-Transmitter - prototype
 
+### Prototype
+![Transmitter](https://github.com/bvujovic/PingPongScore/blob/main/docs/prototype_transmitter.jpg)
+
+### Finished
 ![Transmitter](https://github.com/bvujovic/PingPongScore/blob/main/docs/finished_transmitter.jpg)
-Transmitter - finished
+
 
 ## Receiver
 ![Receiver](https://github.com/bvujovic/PingPongScore/blob/main/docs/prototype_receiver.jpg)
