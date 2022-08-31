@@ -35,6 +35,8 @@ private:
     static bool pulseCountOk(int cnt) { return cnt >= 4 && cnt <= 6; }
     // counting sequences of pulses: 4ms, 5ms and 6ms for home, middle and away buttons/commands
     void pulseCount(ulong pulse, ulong ms);
+    // based on button click (home/middle/away) method returns Command (single or double click)
+    Command returnCommand(Command click1, Command click2, ulong ms);
 
 public:
     // this method should be called in the loop()

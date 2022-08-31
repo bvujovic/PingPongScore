@@ -19,6 +19,5 @@ A Game is played to 11 points; must be won by two points.
 
 
 ## TODO
-- [x] Moving code for signal recognition to a new class
-- [x] Improving code comments
-- [ ] Displaying score on 2 TM1637s
+- [ ] Make final form for the receiver device
+- [ ] Display score on 2 TM1637s

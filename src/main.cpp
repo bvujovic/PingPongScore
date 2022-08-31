@@ -52,11 +52,17 @@ void loop()
   else if (cmd == AwayClick)
     score.pointWon(Away);
   else if (cmd == HomeClick2)
+  {
     score.pointRetracted(Home);
+    score.pointRetracted(Home);
+  }
   else if (cmd == MiddleClick2)
     score.reset();
   else if (cmd == AwayClick2)
+  {
     score.pointRetracted(Away);
+    score.pointRetracted(Away);
+  }
 
   // after every command score should be displayed
   if (cmd != None)
